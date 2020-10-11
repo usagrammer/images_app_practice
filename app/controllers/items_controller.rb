@@ -13,10 +13,12 @@ class ItemsController < ApplicationController
   # GET /items/new
   def new
     @item = Item.new
+    @item.item_images.build
   end
 
   # GET /items/1/edit
   def edit
+    @item.item_images.build
   end
 
   # POST /items
@@ -53,6 +55,6 @@ class ItemsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def item_params
-      params.require(:item).permit(:name, :description, :price)
+      params.require(:item).permit(:name, :description, :price, item_images_attributes: [:src, :id, :_destroy])
     end
 end

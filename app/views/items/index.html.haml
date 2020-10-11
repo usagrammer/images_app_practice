@@ -13,6 +13,7 @@
   %tbody
     - @items.each do |item|
       %tr
+        %td= image_tag item.item_images.first.src.url, width: "100"
         %td= item.name
         %td= item.description
         %td= item.price

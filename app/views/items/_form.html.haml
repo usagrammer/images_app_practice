@@ -6,6 +6,23 @@
         - @item.errors.full_messages.each do |message|
           %li= message
 
+  #image-previews
+    - @item.item_images.each_with_index do |image, i|
+      - if image.persisted?
+        .image-preview{data:{index: i}}
+          = image_tag image.src.url, class:"image-preview__image", data:{index: i}
+          .image-preview-buttons
+            .js-edit 変更
+            .js-remove 削除
+    #camera-icon
+      = icon 'fas', 'camera'
+      クリックして画像を選択
+  = f.fields_for :item_images do |image|
+    = image.file_field :src, class: "js-file", data:{index: image.index}
+    -# ★★★@item　→　image.object に変更★★★
+    - if image.object.persisted?
+      = image.check_box :_destroy, class: 'destroy_check', data:{index: image.index}
+
   .field
     = f.label :name
     = f.text_field :name
