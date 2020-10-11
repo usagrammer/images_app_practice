@@ -1,0 +1,20 @@
+= form_with model: @post, local: true, id: "post-form" do |f|
+  = f.fields_for :post_images do |image|
+    -# #image-previews
+    -# = image.label :src, "クリックして画像を選択", id:"image-previews" do
+    %div#image-previews
+      - @post.post_images.each do |image|
+        - if image.persisted?
+          .image-preview
+            = image_tag image.src.url, class:"image-preview__image"
+            .image-preview-buttons
+              .js-edit 変更
+              .js-remove 削除
+      #camera-icon
+        = icon 'fas', 'camera'
+        クリックして画像を選択
+      = image.file_field :src, class: "js-file", data:{index: image.index}
+    -# = image.label :images, "クリックして画像を選択", id:"image-select-button"
+  = f.text_field :content, placeholder: 'type a message'
+  = f.submit '送信', id: "post-form-button"
+= link_to "トップへ戻る", root_path
