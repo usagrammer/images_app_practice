@@ -54,7 +54,6 @@ $(document).on('turbolinks:load', ()=> {
   });
 
   $('#image-previews').on('click', '.js-remove', function(e) {
-    e.stopPropagation(); // 親のクリックイベントを防ぐ 
     console.log('remove clicked');
     const targetIndex = $(this).parent().parent().data('index');
     // 該当indexを振られているチェックボックスを取得する
