@@ -1,20 +1,19 @@
 = form_with model: @post, local: true, id: "post-form" do |f|
-  #image-previews
-    - @post.post_images.each_with_index do |image, i|
-      - if image.persisted?
-        .image-preview{data:{index: i}}
-          = image_tag image.src.url, class:"image-preview__image", data:{index: i}
-          .image-preview-buttons
-            .js-edit 変更
-            .js-remove 削除
-    %label#image-select-button{for: "post_post_images_attributes_#{@post.post_images.length-1}_src"}
+  = f.fields_for :post_images do |image|
+    %label#image-previews
+      - @post.post_images.each_with_index do |image, i|
+        - if image.persisted?
+          .image-preview{data:{index: i}}
+            = image_tag image.src.url, class:"image-preview__image", data:{index: i}
+            .image-preview-buttons
+              .js-edit 変更
+              .js-remove 削除
       #camera-icon
         = icon 'fas', 'camera'
         クリックして画像を選択
-      = f.fields_for :post_images do |image|
-        = image.file_field :src, class: "js-file", data:{index: image.index}
-        - if image.object.persisted?
-          = image.check_box :_destroy, class: 'destroy_check', data:{index: image.index}
+      = image.file_field :src, class: "js-file", data:{index: image.index}
+      - if @post.persisted?
+        = image.check_box :_destroy, class: 'destroy_check'
   = f.text_field :content, placeholder: 'type a message'
   = f.submit '送信', id: "post-form-button"
 = link_to "トップへ戻る", root_path

@@ -17,11 +17,10 @@
     #camera-icon
       = icon 'fas', 'camera'
       クリックして画像を選択
-  = f.fields_for :item_images do |image|
-    = image.file_field :src, class: "js-file", data:{index: image.index}
-    -# ★★★@item　→　image.object に変更★★★
-    - if image.object.persisted?
-      = image.check_box :_destroy, class: 'destroy_check', data:{index: image.index}
+    = f.fields_for :item_images do |image|
+      = image.file_field :src, class: "js-file", data:{index: image.index}
+      - if @item.persisted?
+        = image.check_box :_destroy, class: 'destroy_check'
 
   .field
     = f.label :name
