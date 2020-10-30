@@ -38,7 +38,7 @@ $(document).on("turbolinks:load", () => {
 
   $(".hidden-destroy").hide();
 
-  $("#image-previews").on("change", "input", function (e) {
+  $("#post-form").on("change", `input[type="file"]`, function (e) {
     const targetIndex = $(this).data("index");
     // ファイルのブラウザ上でのURLを取得する
     const file = e.target.files[0];
